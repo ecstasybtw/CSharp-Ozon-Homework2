@@ -1,0 +1,15 @@
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/bin/Debug/net10.0/Homework2.Application.deps.json
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/bin/Debug/net10.0/Homework2.Application.dll
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/bin/Debug/net10.0/Homework2.Application.pdb
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/bin/Debug/net10.0/Homework2.Domain.dll
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/bin/Debug/net10.0/Homework2.Domain.pdb
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.csproj.AssemblyReference.cache
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.GeneratedMSBuildEditorConfig.editorconfig
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.AssemblyInfoInputs.cache
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.AssemblyInfo.cs
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.csproj.CoreCompileInputs.cache
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework.474AF1B8.Up2Date
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.dll
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/refint/Homework2.Application.dll
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/Homework2.Application.pdb
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Application/obj/Debug/net10.0/ref/Homework2.Application.dll

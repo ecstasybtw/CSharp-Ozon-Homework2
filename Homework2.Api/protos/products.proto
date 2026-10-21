@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package homework2.products;
+
+service ProductService {
+    rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse) {}
+    rpc GetProductById (GetProductRequest) returns (Product) {}
+    rpc GetProductsList (GetProductsListRequest) returns (stream Product) {}
+}
+
+message CreateProductRequest {
+    string name = 1;
+    int64 price_in_kopecks = 2;
+    float weight_in_kg = 3;
+    ProductType product_type = 4;
+    int32 warehouse_number = 5;
+}
+
+message CreateProductResponse {
+    string identifier = 1;
+}
+
+message GetProductRequest {
+    string identifier = 1;
+}
+
+message GetProductsListRequest {
+    optional google.protobuf.Timestamp created_from = 1;
+    optional google.protobuf.Timestamp created_to = 2;
+    optional ProductType product_type = 3;
+    optional int32 warehouse_number = 4;
+
+    optional int32 page = 5;
+    optional int32 page_size = 6;
+}
+
+enum ProductType {
+    GENERAL = 0;
+    HOUSEHOLD_CHEMICALS = 1;
+    APPLIANCE = 2;
+    GROCERIES = 3;
+}
+
+message Product {
+    string identifier = 1;
+    string name = 2;
+    int64 price_in_kopecks = 3;
+    float weight_in_kg = 4;
+    ProductType product_type = 5;
+    int32 warehouse_number = 6;
+    google.protobuf.Timestamp date_created = 7;
+}

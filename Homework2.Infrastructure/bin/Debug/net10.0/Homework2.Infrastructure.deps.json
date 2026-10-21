@@ -1,0 +1,56 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Homework2.Infrastructure/1.0.0": {
+        "dependencies": {
+          "Homework2.Application": "1.0.0",
+          "Homework2.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Homework2.Infrastructure.dll": {}
+        }
+      },
+      "Homework2.Application/1.0.0": {
+        "dependencies": {
+          "Homework2.Domain": "1.0.0"
+        },
+        "runtime": {
+          "Homework2.Application.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Homework2.Domain/1.0.0": {
+        "runtime": {
+          "Homework2.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Homework2.Infrastructure/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Homework2.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Homework2.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
