@@ -9,3 +9,4 @@
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Domain/obj/Debug/net10.0/refint/Homework2.Domain.dll
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Domain/obj/Debug/net10.0/Homework2.Domain.pdb
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Domain/obj/Debug/net10.0/ref/Homework2.Domain.dll
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Domain/obj/Debug/net10.0/Homework2.Domain.sourcelink.json

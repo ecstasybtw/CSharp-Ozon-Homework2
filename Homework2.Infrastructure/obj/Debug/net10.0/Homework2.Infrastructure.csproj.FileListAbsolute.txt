@@ -15,3 +15,4 @@
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Infrastructure/obj/Debug/net10.0/refint/Homework2.Infrastructure.dll
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Infrastructure/obj/Debug/net10.0/Homework2.Infrastructure.pdb
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Infrastructure/obj/Debug/net10.0/ref/Homework2.Infrastructure.dll
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Infrastructure/obj/Debug/net10.0/Homework2.Infrastructure.sourcelink.json
