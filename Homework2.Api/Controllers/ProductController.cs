@@ -1,3 +1,4 @@
+using FluentValidation;
 using Homework2.Api.Contracts;
 using Homework2.Application.Interfaces;
 using Homework2.Domain.Entities;
@@ -8,15 +9,29 @@ using Microsoft.AspNetCore.Mvc;
 public class ProductController : ControllerBase
 {
     private readonly IProductService _service;
+    private readonly IValidator<CreateProductRequest> _createValidator;
+    private readonly IValidator<GetProductListRequest> _listValidator;
 
-    public ProductController(IProductService service)
+    public ProductController(
+        IProductService service,
+        IValidator<CreateProductRequest> createValidator,
+        IValidator<GetProductListRequest> listValidator
+    )
     {
         _service = service;
+        _createValidator = createValidator;
+        _listValidator = listValidator;
     }
 
     [HttpPost]
     public ActionResult<CreateProductResponse> CreateProduct(CreateProductRequest request)
     {
+        var validationResult = _createValidator.Validate(request);
+        if (!validationResult.IsValid)
+        {
+            return ValidationProblem(new ValidationProblemDetails(validationResult.ToDictionary()));
+        }
+
         var identifier = _service.CreateProduct(
             name: request.Name,
             priceInKopecks: request.PriceInKopecks,
@@ -50,6 +65,12 @@ public class ProductController : ControllerBase
         [FromQuery] GetProductListRequest request
     )
     {
+        var validationResult = _listValidator.Validate(request);
+        if (!validationResult.IsValid)
+        {
+            return ValidationProblem(new ValidationProblemDetails(validationResult.ToDictionary()));
+        }
+
         var products = _service.GetProductList(
             createdFrom: request.CreatedFrom,
             createdTo: request.CreatedTo,

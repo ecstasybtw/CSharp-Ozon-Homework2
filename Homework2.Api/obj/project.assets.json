@@ -2,6 +2,19 @@
   "version": 4,
   "targets": {
     "net10.0": {
+      "FluentValidation/12.2.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Google.Protobuf/3.35.1": {
         "type": "package",
         "compile": {
@@ -176,6 +189,21 @@
     }
   },
   "libraries": {
+    "FluentValidation/12.2.0": {
+      "sha512": "DR3lFbdnKucaaj1/8zMNOACMz/64igzox1yVZSFVsLxYB5mxAB+wFP1WZ8fjwrZnbU1KA1DoMzHKYKxUfuZ4wQ==",
+      "type": "package",
+      "path": "fluentvalidation/12.2.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "fluent-validation-icon.png",
+        "fluentvalidation.12.2.0.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net8.0/FluentValidation.dll",
+        "lib/net8.0/FluentValidation.xml"
+      ]
+    },
     "Google.Protobuf/3.35.1": {
       "sha512": "pxtkuXhR8svkvDTQrYew9GZQt6eWhblz/V/WKUFrQgkHYlQPsumJTeF6ppHRJpe6j9ffukkd5lQULiiKaek4xA==",
       "type": "package",
@@ -433,6 +461,7 @@
   },
   "projectFileDependencyGroups": {
     "net10.0": [
+      "FluentValidation >= 12.2.0",
       "Grpc.AspNetCore >= 2.84.0",
       "Homework2.Application >= 1.0.0",
       "Homework2.Infrastructure >= 1.0.0"
@@ -490,6 +519,10 @@
         "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
+          "FluentValidation": {
+            "target": "Package",
+            "version": "[12.2.0, )"
+          },
           "Grpc.AspNetCore": {
             "target": "Package",
             "version": "[2.84.0, )"

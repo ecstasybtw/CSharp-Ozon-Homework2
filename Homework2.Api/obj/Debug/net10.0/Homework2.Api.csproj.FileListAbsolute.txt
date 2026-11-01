@@ -42,3 +42,4 @@
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Api/obj/Debug/net10.0/Homework2.Api.genruntimeconfig.cache
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Api/obj/Debug/net10.0/ref/Homework2.Api.dll
 /Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Api/obj/Debug/net10.0/Homework2.Api.sourcelink.json
+/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Api/bin/Debug/net10.0/FluentValidation.dll

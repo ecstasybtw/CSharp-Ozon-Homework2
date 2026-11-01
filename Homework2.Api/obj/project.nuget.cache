@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DARofYgMXvU=",
+  "dgSpecHash": "qthe/K8ao74=",
   "success": true,
   "projectFilePath": "/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Api/Homework2.Api.csproj",
   "expectedPackageFiles": [
+    "/Users/ecstasybtw/.nuget/packages/fluentvalidation/12.2.0/fluentvalidation.12.2.0.nupkg.sha512",
     "/Users/ecstasybtw/.nuget/packages/google.protobuf/3.35.1/google.protobuf.3.35.1.nupkg.sha512",
     "/Users/ecstasybtw/.nuget/packages/grpc.aspnetcore/2.84.0/grpc.aspnetcore.2.84.0.nupkg.sha512",
     "/Users/ecstasybtw/.nuget/packages/grpc.aspnetcore.server/2.84.0/grpc.aspnetcore.server.2.84.0.nupkg.sha512",
