@@ -19,6 +19,14 @@ builder.Services.AddSingleton<IProductService, ProductService>();
 
 var app = builder.Build();
 
+app.UseExceptionHandler(errorApp =>
+{
+    errorApp.Run(context => Results.Problem(
+        statusCode: StatusCodes.Status500InternalServerError,
+        title: "Internal server error."
+    ).ExecuteAsync(context));
+});
+
 app.MapGrpcService<ProductGrpcService>();
 app.MapControllers();
 app.MapGet("/", () => "Hello World!");
