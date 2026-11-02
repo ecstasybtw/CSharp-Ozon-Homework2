@@ -12,6 +12,9 @@ builder.Services.AddGrpc();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IValidator<CreateProductRequest>, CreateProductRequestValidator>();
 builder.Services.AddScoped<IValidator<GetProductListRequest>, GetProductListRequestValidator>();
+builder.Services.AddScoped<IValidator<Homework2.Products.CreateProductRequest>, GrpcCreateProductRequestValidator>();
+builder.Services.AddScoped<IValidator<Homework2.Products.GetProductRequest>, GrpcGetProductRequestValidator>();
+builder.Services.AddScoped<IValidator<Homework2.Products.GetProductsListRequest>, GrpcGetProductsListRequestValidator>();
 
 
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();

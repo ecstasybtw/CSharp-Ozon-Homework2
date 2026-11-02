@@ -1,3 +1,4 @@
+using FluentValidation;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Homework2.Application.Interfaces;
@@ -10,10 +11,21 @@ namespace Homework2.Api.Services;
 public class ProductGrpcService : ProductService.ProductServiceBase
 {
     private readonly IProductService _productService;
+    private readonly IValidator<CreateProductRequest> _createValidator;
+    private readonly IValidator<GetProductRequest> _getValidator;
+    private readonly IValidator<GetProductsListRequest> _listValidator;
 
-    public ProductGrpcService(IProductService productService)
+    public ProductGrpcService(
+        IProductService productService,
+        IValidator<CreateProductRequest> createValidator,
+        IValidator<GetProductRequest> getValidator,
+        IValidator<GetProductsListRequest> listValidator
+    )
     {
         _productService = productService;
+        _createValidator = createValidator;
+        _getValidator = getValidator;
+        _listValidator = listValidator;
     }
 
     public override Task<CreateProductResponse> CreateProduct(
@@ -22,6 +34,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
     )
     {
         context.CancellationToken.ThrowIfCancellationRequested();
+        ValidateRequest(_createValidator, request);
 
         var identifier = _productService.CreateProduct(
             name: request.Name,
@@ -42,10 +55,8 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         ServerCallContext context
     )
     {
-        if (!Guid.TryParse(request.Identifier, out var identifier))
-        {
-            throw new ArgumentException("This identifier in invalid");
-        }
+        ValidateRequest(_getValidator, request);
+        var identifier = Guid.Parse(request.Identifier);
 
         var productToReturn = _productService.GetProductById(identifier);
 
@@ -65,6 +76,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
     )
     {
         context.CancellationToken.ThrowIfCancellationRequested();
+        ValidateRequest(_listValidator, request);
 
         DateTime? createdFrom;
         DateTime? createdTo;
@@ -105,6 +117,16 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         {
             context.CancellationToken.ThrowIfCancellationRequested();
             await responseStream.WriteAsync(ToGrpcProduct(product));
+        }
+    }
+
+    private static void ValidateRequest<T>(IValidator<T> validator, T request)
+    {
+        var result = validator.Validate(request);
+        if (!result.IsValid)
+        {
+            var message = string.Join("; ", result.Errors.Select(error => $"{error.PropertyName}: {error.ErrorMessage}"));
+            throw new RpcException(new Status(StatusCode.InvalidArgument, message));
         }
     }
 
