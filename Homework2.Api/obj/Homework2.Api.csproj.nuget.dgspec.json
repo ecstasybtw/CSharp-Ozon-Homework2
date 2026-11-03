@@ -60,6 +60,10 @@
             "Grpc.AspNetCore": {
               "target": "Package",
               "version": "[2.84.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.3.0, )"
             }
           },
           "imports": [

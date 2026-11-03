@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "qthe/K8ao74=",
+  "dgSpecHash": "ZOopZ0mfPzc=",
   "success": true,
   "projectFilePath": "/Users/ecstasybtw/01 main/02 Учебное/07 C# Ozon Tech/ДЗ №2/Homework2/Homework2.Api/Homework2.Api.csproj",
   "expectedPackageFiles": [
@@ -13,7 +13,13 @@
     "/Users/ecstasybtw/.nuget/packages/grpc.net.client/2.84.0/grpc.net.client.2.84.0.nupkg.sha512",
     "/Users/ecstasybtw/.nuget/packages/grpc.net.clientfactory/2.84.0/grpc.net.clientfactory.2.84.0.nupkg.sha512",
     "/Users/ecstasybtw/.nuget/packages/grpc.net.common/2.84.0/grpc.net.common.2.84.0.nupkg.sha512",
-    "/Users/ecstasybtw/.nuget/packages/grpc.tools/2.84.0/grpc.tools.2.84.0.nupkg.sha512"
+    "/Users/ecstasybtw/.nuget/packages/grpc.tools/2.84.0/grpc.tools.2.84.0.nupkg.sha512",
+    "/Users/ecstasybtw/.nuget/packages/microsoft.extensions.apidescription.server/3.0.0/microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "/Users/ecstasybtw/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/ecstasybtw/.nuget/packages/swashbuckle.aspnetcore/6.3.0/swashbuckle.aspnetcore.6.3.0.nupkg.sha512",
+    "/Users/ecstasybtw/.nuget/packages/swashbuckle.aspnetcore.swagger/6.3.0/swashbuckle.aspnetcore.swagger.6.3.0.nupkg.sha512",
+    "/Users/ecstasybtw/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.3.0/swashbuckle.aspnetcore.swaggergen.6.3.0.nupkg.sha512",
+    "/Users/ecstasybtw/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.3.0/swashbuckle.aspnetcore.swaggerui.6.3.0.nupkg.sha512"
   ],
   "logs": []
 }

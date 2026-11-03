@@ -1,1 +1,9 @@
-.DS_Store
+/.DS_Store
+/Homework2.Api/bin/
+/Homework2.Api/obj/
+/Homework2.Application/bin/
+/Homework2.Application/obj/
+/Homework2.Domain/bin/
+/Homework2.Domain/obj/
+/Homework2.Infrastructure/bin/
+/Homework2.Infrastructure/obj/

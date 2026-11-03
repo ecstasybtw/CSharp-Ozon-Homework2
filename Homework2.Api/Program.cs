@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
 builder.Services.AddControllers();
+builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IValidator<CreateProductRequest>, CreateProductRequestValidator>();
 builder.Services.AddScoped<IValidator<GetProductListRequest>, GetProductListRequestValidator>();
 builder.Services.AddScoped<IValidator<Homework2.Products.CreateProductRequest>, GrpcCreateProductRequestValidator>();
@@ -30,6 +31,9 @@ app.UseExceptionHandler(errorApp =>
         title: "Internal server error."
     ).ExecuteAsync(context));
 });
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapGrpcService<ProductGrpcService>();
 app.MapControllers();
