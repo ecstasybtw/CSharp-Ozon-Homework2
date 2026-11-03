@@ -1,5 +1,6 @@
 using FluentValidation;
 using Homework2.Api.Contracts;
+using Homework2.Api.Interceptors;
 using Homework2.Api.Services;
 using Homework2.Api.Validators;
 using Homework2.Application.Interfaces;
@@ -8,7 +9,7 @@ using Homework2.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddGrpc();
+builder.Services.AddGrpc(options => options.Interceptors.Add<LoggingInterceptor>());
 builder.Services.AddControllers();
 builder.Services.AddScoped<IValidator<CreateProductRequest>, CreateProductRequestValidator>();
 builder.Services.AddScoped<IValidator<GetProductListRequest>, GetProductListRequestValidator>();
