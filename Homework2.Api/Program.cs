@@ -5,6 +5,7 @@ using Homework2.Api.Services;
 using Homework2.Api.Validators;
 using Homework2.Application.Interfaces;
 using Homework2.Application.Services;
+using Homework2.Infrastructure.Helpers;
 using Homework2.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +22,10 @@ builder.Services.AddScoped<IValidator<Homework2.Products.GetProductsListRequest>
 
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 builder.Services.AddSingleton<IProductService, ProductService>();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException();
+
+builder.Services.AddSingleton<IPostgresConnectionFactory>(new PostgresConnectionFactory(connectionString));
 
 var app = builder.Build();
 
