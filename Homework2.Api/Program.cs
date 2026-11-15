@@ -6,6 +6,7 @@ using Homework2.Api.Validators;
 using Homework2.Application.Interfaces;
 using Homework2.Application.Services;
 using Homework2.Infrastructure.Helpers;
+using Homework2.Infrastructure.Migrations;
 using Homework2.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +29,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddSingleton<IPostgresConnectionFactory>(new PostgresConnectionFactory(connectionString));
 
 var app = builder.Build();
+
+app.RunMigrations();
 
 app.UseExceptionHandler(errorApp =>
 {
