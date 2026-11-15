@@ -12,7 +12,7 @@ public class ProductService : IProductService
         _repository = repository;
     }
 
-    public IEnumerable<Product> GetProductList(
+    public Task<IEnumerable<Product>> GetProductListAsync(
         DateTime? createdFrom = null,
         DateTime? createdTo = null,
         ProductType? productType = null,
@@ -21,7 +21,7 @@ public class ProductService : IProductService
         int pageSize = 20
     )
     {
-        return _repository.GetProductList(
+        return _repository.GetProductListAsync(
             createdFrom,
             createdTo,
             productType,
@@ -31,12 +31,12 @@ public class ProductService : IProductService
         );
     }
 
-    public Product? GetProductById(Guid identifier)
+    public Task<Product?> GetProductByIdAsync(Guid identifier)
     {
-        return _repository.GetProductById(identifier);
+        return _repository.GetProductByIdAsync(identifier);
     }
 
-    public Guid CreateProduct(
+    public Task<Guid> CreateProductAsync(
         string name,
         long priceInKopecks,
         float weightInKg,
@@ -44,12 +44,15 @@ public class ProductService : IProductService
         int warehouseNumber
     )
     {
-        return _repository.CreateProduct(
-            name,
-            priceInKopecks,
-            weightInKg,
-            productType,
-            warehouseNumber
-        );
+        var product = new Product
+        {
+            Name = name,
+            PriceInKopecks = priceInKopecks,
+            WeightInKg = weightInKg,
+            ProductType = productType,
+            WarehouseNumber = warehouseNumber
+        };
+
+        return _repository.CreateProductAsync(product);
     }
 }

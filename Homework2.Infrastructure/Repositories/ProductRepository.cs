@@ -1,24 +1,27 @@
 using System.Collections.Concurrent;
+using Dapper;
 using Homework2.Application.Interfaces;
 using Homework2.Domain.Entities;
+using Homework2.Infrastructure.Helpers;
 
 namespace Homework2.Infrastructure.Repositories;
 
-public class ProductRepository : IProductRepository
+public class ProductRepository(IPostgresConnectionFactory postgresConnectionFactory) : IProductRepository
 {
-    private readonly ConcurrentDictionary<Guid, Product> _storage = new();
 
-    public Product? GetProductById(Guid identifier)
+    public async Task<Product?> GetProductByIdAsync(Guid identifier)
     {
-        if (_storage.TryGetValue(identifier, out var result))
-        {
-            return result;
-        }
+        await using var connection = postgresConnectionFactory.GetConnection();
 
-        return null;
+        var sqlQuery = "SELECT * FROM Product " +
+                       "WHERE id = @identifier";
+
+        var result = await connection.QueryFirstOrDefaultAsync<Product>(sqlQuery, new { identifier });
+
+        return result;
     }
 
-    public IEnumerable<Product> GetProductList(
+    public async Task<IEnumerable<Product>> GetProductListAsync(
         DateTime? createdFrom = null,
         DateTime? createdTo = null,
         ProductType? productType = null,
@@ -27,6 +30,7 @@ public class ProductRepository : IProductRepository
         int pageSize = 20
     )
     {
+        await using var connection = postgresConnectionFactory.GetConnection();
 
         ArgumentOutOfRangeException.ThrowIfLessThan(page, 1);
         ArgumentOutOfRangeException.ThrowIfLessThan(pageSize, 1);
@@ -36,69 +40,71 @@ public class ProductRepository : IProductRepository
             throw new ArgumentException("createdFrom must be before createdTo.", nameof(createdTo));
         }
 
-        IEnumerable<Product> result = _storage.Values;
+        var conditions = new List<string>();
+        var parameters = new DynamicParameters();
 
         if (createdFrom.HasValue)
         {
-            result = result.Where(product => product.DateCreated >= createdFrom.Value);
+            conditions.Add("datecreated >= @createdFrom");
+            parameters.Add("createdFrom", createdFrom.Value);
         }
 
         if (createdTo.HasValue)
         {
-            result = result.Where(product => product.DateCreated < createdTo.Value);
+            conditions.Add("datecreated < @createdTo");
+            parameters.Add("createdTo", createdTo.Value);
         }
 
         if (productType != null)
         {
-            result = result.Where(product => product.ProductType == productType);
+            conditions.Add("producttype = @productType");
+            parameters.Add("productType", (int)productType.Value);
         }
 
         if (warehouseNumber != null)
         {
-            result = result.Where(product => product.WarehouseNumber == warehouseNumber);
+            conditions.Add("warehousenumber = @warehouseNumber");
+            parameters.Add("warehouseNumber", warehouseNumber.Value);
         }
 
-        long skip = ((long)page - 1) * pageSize;
+        var sqlQuery = "SELECT id, name, priceinkopecks, producttype, weightinkg, warehousenumber, datecreated FROM product";
 
-        if (skip > int.MaxValue)
+        if (conditions.Count > 0)
         {
-            return Array.Empty<Product>();
+            sqlQuery += " WHERE " + string.Join(" AND ", conditions);
         }
 
-        return result
-            .OrderBy(product => product.DateCreated)
-            .ThenBy(product => product.Id)
-            .Skip((int)skip)
-            .Take(pageSize)
-            .ToArray();
+        sqlQuery += " ORDER BY datecreated, id LIMIT @pageSize OFFSET @offset";
+        parameters.Add("pageSize", pageSize);
+        parameters.Add("offset", ((long)page - 1) * pageSize);
+
+        return await connection.QueryAsync<Product>(sqlQuery, parameters);
     }
 
 
-    public Guid CreateProduct(
-        string name,
-        long priceInKopecks,
-        float weightInKg,
-        ProductType productType,
-        int warehouseNumber
+    public async Task<Guid> CreateProductAsync(
+        Product product
     )
+
     {
-        Product newProduct = new Product
+        await using var connection = postgresConnectionFactory.GetConnection();
+
+        var sqlQuery = "INSERT INTO Product (id, name, priceinkopecks, producttype, weightinkg, warehousenumber, datecreated) " +
+                        "VALUES (@id, @name, @priceinkopecks, @producttype, @weightinkg, @warehousenumber, @datecreated)";
+
+        await connection.ExecuteAsync(sqlQuery, param: new
         {
-            Name = name,
-            PriceInKopecks = priceInKopecks,
-            WeightInKg = weightInKg,
-            ProductType = productType,
-            WarehouseNumber = warehouseNumber
-        };
+            id = product.Id,
+            name = product.Name,
+            priceinkopecks = product.PriceInKopecks,
+            producttype = product.ProductType,
+            weightinkg = product.WeightInKg,
+            warehousenumber = product.WarehouseNumber,
+            datecreated = product.DateCreated
+        });
 
+        return product.Id;
 
-
-        if (_storage.TryAdd(newProduct.Id, newProduct))
-        {
-            return newProduct.Id;
-        }
-
-        throw new InvalidOperationException($"A product with Id '{newProduct.Id}' already exists.");
     }
 
 }

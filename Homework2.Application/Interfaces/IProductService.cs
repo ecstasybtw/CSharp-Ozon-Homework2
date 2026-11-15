@@ -4,7 +4,7 @@ namespace Homework2.Application.Interfaces;
 
 public interface IProductService
 {
-    public Guid CreateProduct(
+    public Task<Guid> CreateProductAsync(
         string name,
         long priceInKopecks,
         float weightInKg,
@@ -12,7 +12,7 @@ public interface IProductService
         int warehouseNumber
     );
 
-    public IEnumerable<Product> GetProductList(
+    public Task<IEnumerable<Product>> GetProductListAsync(
         DateTime? createdFrom = null,
         DateTime? createdTo = null,
         ProductType? productType = null,
@@ -21,7 +21,7 @@ public interface IProductService
         int pageSize = 20
     );
 
-    public Product? GetProductById(
+    public Task<Product?> GetProductByIdAsync(
         Guid identifier
     );
 }

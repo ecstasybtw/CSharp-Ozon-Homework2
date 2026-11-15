@@ -24,7 +24,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<CreateProductResponse> CreateProduct(CreateProductRequest request)
+    public async Task<ActionResult<CreateProductResponse>> CreateProductAsync(CreateProductRequest request)
     {
         var validationResult = _createValidator.Validate(request);
         if (!validationResult.IsValid)
@@ -32,7 +32,7 @@ public class ProductController : ControllerBase
             return ValidationProblem(new ValidationProblemDetails(validationResult.ToDictionary()));
         }
 
-        var identifier = _service.CreateProduct(
+        var identifier = await _service.CreateProductAsync(
             name: request.Name,
             priceInKopecks: request.PriceInKopecks,
             weightInKg: request.WeightInKg,
@@ -48,9 +48,9 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Product> GetProductById(Guid id)
+    public async Task<ActionResult<Product>> GetProductByIdAsync(Guid id)
     {
-        var product = _service.GetProductById(identifier: id);
+        var product = await _service.GetProductByIdAsync(identifier: id);
 
         if (product is null)
         {
@@ -61,7 +61,7 @@ public class ProductController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Product>> GetProductList(
+    public async Task<ActionResult<IEnumerable<Product>>> GetProductListAsync(
         [FromQuery] GetProductListRequest request
     )
     {
@@ -71,7 +71,7 @@ public class ProductController : ControllerBase
             return ValidationProblem(new ValidationProblemDetails(validationResult.ToDictionary()));
         }
 
-        var products = _service.GetProductList(
+        var products = await _service.GetProductListAsync(
             createdFrom: request.CreatedFrom,
             createdTo: request.CreatedTo,
             productType: request.ProductType,

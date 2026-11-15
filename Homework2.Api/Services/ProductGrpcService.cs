@@ -28,7 +28,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         _listValidator = listValidator;
     }
 
-    public override Task<CreateProductResponse> CreateProduct(
+    public override async Task<CreateProductResponse> CreateProduct(
         CreateProductRequest request,
         ServerCallContext context
     )
@@ -36,7 +36,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         context.CancellationToken.ThrowIfCancellationRequested();
         ValidateRequest(_createValidator, request);
 
-        var identifier = _productService.CreateProduct(
+        var identifier = await _productService.CreateProductAsync(
             name: request.Name,
             priceInKopecks: request.PriceInKopecks,
             weightInKg: request.WeightInKg,
@@ -44,13 +44,13 @@ public class ProductGrpcService : ProductService.ProductServiceBase
             warehouseNumber: request.WarehouseNumber
         );
 
-        return Task.FromResult(new CreateProductResponse
+        return new CreateProductResponse
         {
             Identifier = identifier.ToString()
-        });
+        };
     }
 
-    public override Task<Product> GetProductById(
+    public override async Task<Product> GetProductById(
         GetProductRequest request,
         ServerCallContext context
     )
@@ -58,7 +58,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         ValidateRequest(_getValidator, request);
         var identifier = Guid.Parse(request.Identifier);
 
-        var productToReturn = _productService.GetProductById(identifier);
+        var productToReturn = await _productService.GetProductByIdAsync(identifier);
 
         if (productToReturn == null)
         {
@@ -66,7 +66,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
             throw new RpcException(status);
         }
 
-        return Task.FromResult(ToGrpcProduct(productToReturn));
+        return ToGrpcProduct(productToReturn);
     }
 
     public override async Task GetProductsList(
@@ -99,7 +99,7 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         IEnumerable<DomainProduct> products;
         try
         {
-            products = _productService.GetProductList(
+            products = await _productService.GetProductListAsync(
                 createdFrom: createdFrom,
                 createdTo: createdTo,
                 productType: productType,
