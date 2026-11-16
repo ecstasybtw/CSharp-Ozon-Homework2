@@ -36,6 +36,19 @@ public class ProductService : IProductService
         return _repository.GetProductByIdAsync(identifier);
     }
 
+    public Task<Product?> UpdateProductAsync(
+        Guid identifier,
+        string? name = null,
+        long? priceInKopecks = null,
+        float? weightInKg = null,
+        ProductType? productType = null,
+        int? warehouseNumber = null
+    )
+    {
+        return _repository.UpdateProductAsync(
+            identifier, name, priceInKopecks, weightInKg, productType, warehouseNumber);
+    }
+
     public Task<Guid> CreateProductAsync(
         string name,
         long priceInKopecks,

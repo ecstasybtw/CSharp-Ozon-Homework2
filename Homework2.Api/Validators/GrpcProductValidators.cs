@@ -15,6 +15,41 @@ public class GrpcCreateProductRequestValidator : AbstractValidator<CreateProduct
     }
 }
 
+public class GrpcUpdateProductRequestValidator : AbstractValidator<UpdateProductRequest>
+{
+    public GrpcUpdateProductRequestValidator()
+    {
+        RuleFor(request => request.Identifier)
+            .Must(identifier => Guid.TryParse(identifier, out _))
+            .WithMessage("Identifier must be a valid Guid.");
+
+        RuleFor(request => request)
+            .Must(request => request.HasName
+                || request.HasPriceInKopecks
+                || request.HasWeightInKg
+                || request.HasProductType
+                || request.HasWarehouseNumber)
+            .WithMessage("At least one field must be provided for update.");
+
+        RuleFor(request => request.Name)
+            .NotEmpty()
+            .When(request => request.HasName);
+
+        RuleFor(request => request.PriceInKopecks)
+            .GreaterThanOrEqualTo(0)
+            .When(request => request.HasPriceInKopecks);
+
+        RuleFor(request => request.WeightInKg)
+            .GreaterThan(0)
+            .Must(float.IsFinite)
+            .When(request => request.HasWeightInKg);
+
+        RuleFor(request => request.ProductType)
+            .IsInEnum()
+            .When(request => request.HasProductType);
+    }
+}
+
 public class GrpcGetProductRequestValidator : AbstractValidator<GetProductRequest>
 {
     public GrpcGetProductRequestValidator()

@@ -14,18 +14,21 @@ public class ProductGrpcService : ProductService.ProductServiceBase
     private readonly IValidator<CreateProductRequest> _createValidator;
     private readonly IValidator<GetProductRequest> _getValidator;
     private readonly IValidator<GetProductsListRequest> _listValidator;
+    private readonly IValidator<UpdateProductRequest> _updateValidator;
 
     public ProductGrpcService(
         IProductService productService,
         IValidator<CreateProductRequest> createValidator,
         IValidator<GetProductRequest> getValidator,
-        IValidator<GetProductsListRequest> listValidator
+        IValidator<GetProductsListRequest> listValidator,
+        IValidator<UpdateProductRequest> updateValidator
     )
     {
         _productService = productService;
         _createValidator = createValidator;
         _getValidator = getValidator;
         _listValidator = listValidator;
+        _updateValidator = updateValidator;
     }
 
     public override async Task<CreateProductResponse> CreateProduct(
@@ -48,6 +51,31 @@ public class ProductGrpcService : ProductService.ProductServiceBase
         {
             Identifier = identifier.ToString()
         };
+    }
+
+    public override async Task<Product> UpdateProduct(
+        UpdateProductRequest request,
+        ServerCallContext context
+    )
+    {
+        context.CancellationToken.ThrowIfCancellationRequested();
+        ValidateRequest(_updateValidator, request);
+
+        var product = await _productService.UpdateProductAsync(
+            identifier: Guid.Parse(request.Identifier),
+            name: request.HasName ? request.Name : null,
+            priceInKopecks: request.HasPriceInKopecks ? request.PriceInKopecks : null,
+            weightInKg: request.HasWeightInKg ? request.WeightInKg : null,
+            productType: request.HasProductType ? ToDomainProductType(request.ProductType) : null,
+            warehouseNumber: request.HasWarehouseNumber ? request.WarehouseNumber : null
+        );
+
+        if (product is null)
+        {
+            throw new RpcException(new Status(StatusCode.NotFound, "Product with this Id not found."));
+        }
+
+        return ToGrpcProduct(product);
     }
 
     public override async Task<Product> GetProductById(

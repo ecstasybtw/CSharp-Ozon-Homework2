@@ -8,6 +8,7 @@ service ProductService {
     rpc CreateProduct (CreateProductRequest) returns (CreateProductResponse) {}
     rpc GetProductById (GetProductRequest) returns (Product) {}
     rpc GetProductsList (GetProductsListRequest) returns (stream Product) {}
+    rpc UpdateProduct (UpdateProductRequest) returns (Product) {}
 }
 
 message CreateProductRequest {
@@ -34,6 +35,15 @@ message GetProductsListRequest {
 
     optional int32 page = 5;
     optional int32 page_size = 6;
+}
+
+message UpdateProductRequest {
+    string identifier = 1;
+    optional string name = 2;
+    optional int64 price_in_kopecks = 3;
+    optional float weight_in_kg = 4;
+    optional ProductType product_type = 5;
+    optional int32 warehouse_number = 6;
 }
 
 enum ProductType {

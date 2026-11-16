@@ -11,16 +11,19 @@ public class ProductController : ControllerBase
     private readonly IProductService _service;
     private readonly IValidator<CreateProductRequest> _createValidator;
     private readonly IValidator<GetProductListRequest> _listValidator;
+    private readonly IValidator<UpdateProductRequest> _updateValidator;
 
     public ProductController(
         IProductService service,
         IValidator<CreateProductRequest> createValidator,
-        IValidator<GetProductListRequest> listValidator
+        IValidator<GetProductListRequest> listValidator,
+        IValidator<UpdateProductRequest> updateValidator
     )
     {
         _service = service;
         _createValidator = createValidator;
         _listValidator = listValidator;
+        _updateValidator = updateValidator;
     }
 
     [HttpPost]
@@ -45,6 +48,44 @@ public class ProductController : ControllerBase
             new CreateProductResponse(
             identifier: identifier
         ));
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<ActionResult<UpdateProductResponse>> UpdateProductAsync(
+        Guid id,
+        [FromBody] UpdateProductRequest request
+    )
+    {
+        var validationResult = _updateValidator.Validate(request);
+        if (!validationResult.IsValid)
+        {
+            return ValidationProblem(new ValidationProblemDetails(validationResult.ToDictionary()));
+        }
+
+        var product = await _service.UpdateProductAsync(
+            identifier: id,
+            name: request.Name,
+            priceInKopecks: request.PriceInKopecks,
+            weightInKg: request.WeightInKg,
+            productType: request.ProductType,
+            warehouseNumber: request.WarehouseNumber
+        );
+
+        if (product is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(new UpdateProductResponse
+        {
+            Id = product.Id,
+            Name = product.Name,
+            PriceInKopecks = product.PriceInKopecks,
+            WeightInKg = product.WeightInKg,
+            ProductType = product.ProductType,
+            WarehouseNumber = product.WarehouseNumber,
+            DateCreated = product.DateCreated
+        });
     }
 
     [HttpGet("{id}")]

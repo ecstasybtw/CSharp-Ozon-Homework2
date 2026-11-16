@@ -4,6 +4,15 @@ namespace Homework2.Application.Interfaces;
 
 public interface IProductService
 {
+    public Task<Product?> UpdateProductAsync(
+        Guid identifier,
+        string? name = null,
+        long? priceInKopecks = null,
+        float? weightInKg = null,
+        ProductType? productType = null,
+        int? warehouseNumber = null
+    );
+
     public Task<Guid> CreateProductAsync(
         string name,
         long priceInKopecks,

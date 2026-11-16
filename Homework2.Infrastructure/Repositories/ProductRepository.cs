@@ -107,4 +107,61 @@ public class ProductRepository(IPostgresConnectionFactory postgresConnectionFact
 
     }
 
+
+    public async Task<Product?> UpdateProductAsync(
+        Guid identifier,
+        string? name = null,
+        long? priceInKopecks = null,
+        float? weightInKg = null,
+        ProductType? productType = null,
+        int? warehouseNumber = null
+    )
+    {
+        var assignments = new List<string>();
+        var parameters = new DynamicParameters();
+        parameters.Add("identifier", identifier);
+
+        if (name != null)
+        {
+            assignments.Add("name = @name");
+            parameters.Add("name", name);
+        }
+
+        if (priceInKopecks.HasValue)
+        {
+            assignments.Add("priceinkopecks = @priceInKopecks");
+            parameters.Add("priceInKopecks", priceInKopecks.Value);
+        }
+
+        if (weightInKg.HasValue)
+        {
+            assignments.Add("weightinkg = @weightInKg");
+            parameters.Add("weightInKg", weightInKg.Value);
+        }
+
+        if (productType.HasValue)
+        {
+            assignments.Add("producttype = @productType");
+            parameters.Add("productType", (int)productType.Value);
+        }
+
+        if (warehouseNumber.HasValue)
+        {
+            assignments.Add("warehousenumber = @warehouseNumber");
+            parameters.Add("warehouseNumber", warehouseNumber.Value);
+        }
+
+        if (assignments.Count == 0)
+        {
+            throw new ArgumentException("At least one field must be provided for update.");
+        }
+
+        var sqlQuery = "UPDATE product SET " + string.Join(", ", assignments)
+            + " WHERE id = @identifier"
+            + " RETURNING id, name, priceinkopecks, producttype, weightinkg, warehousenumber, datecreated";
+
+        await using var connection = postgresConnectionFactory.GetConnection();
+        return await connection.QuerySingleOrDefaultAsync<Product>(sqlQuery, parameters);
+    }
+
 }
